@@ -50,7 +50,7 @@ public class SampleController {
         String filePath = request.getSession().getServletContext().getRealPath("upload/");
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-            return success("http://localhost:8080"+"/upload/"+fileName);
+            return success("http://119.45.229.87:1271"+"/upload/"+fileName);
         } catch (Exception e) {
             return error("上传失败");
         }
