@@ -17,7 +17,7 @@ public class SampleController {
 
     @GetMapping("/get")
     public BaseResponse testGet(String username, String password) {
-        return success(new ExampleBean(username, password));
+        return success(new ExampleBean().setUsername(username).setPassword(password));
     }
 
     @PostMapping("/post")
@@ -32,7 +32,7 @@ public class SampleController {
 
     @DeleteMapping("/delete")
     public BaseResponse testDelete(String username, String password) {
-        return success(success(new ExampleBean(username, password)));
+        return success(success(new ExampleBean().setUsername(username).setPassword(password)));
     }
 
     @PostMapping("/postJson")
@@ -50,7 +50,7 @@ public class SampleController {
         String filePath = request.getSession().getServletContext().getRealPath("upload/");
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-            return success("http://119.45.229.87:1271"+"/upload/"+fileName);
+            return success("http://119.45.229.87:1271" + "/upload/" + fileName);
         } catch (Exception e) {
             return error("上传失败");
         }
@@ -85,9 +85,22 @@ public class SampleController {
         private String username;
         private String password;
 
-        public ExampleBean(String username, String password) {
+        public String getUsername() {
+            return username;
+        }
+
+        public ExampleBean setUsername(String username) {
             this.username = username;
+            return this;
+        }
+
+        public String getPassword() {
+            return password;
+        }
+
+        public ExampleBean setPassword(String password) {
             this.password = password;
+            return this;
         }
     }
 
