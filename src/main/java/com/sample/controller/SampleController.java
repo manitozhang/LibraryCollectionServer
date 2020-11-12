@@ -50,7 +50,7 @@ public class SampleController {
         String filePath = request.getSession().getServletContext().getRealPath("upload/");
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-            return success("http://119.45.229.87:1271" + "/upload/" + fileName);
+            return success(new ExampleFileBean().setFileUrl("http://119.45.229.87:1271" + "/upload/" + fileName));
         } catch (Exception e) {
             return error("上传失败");
         }
@@ -100,6 +100,19 @@ public class SampleController {
 
         public ExampleBean setPassword(String password) {
             this.password = password;
+            return this;
+        }
+    }
+
+    static class ExampleFileBean {
+        private String fileUrl;
+
+        public String getFileUrl() {
+            return fileUrl;
+        }
+
+        public ExampleFileBean setFileUrl(String fileUrl) {
+            this.fileUrl = fileUrl;
             return this;
         }
     }
