@@ -1,6 +1,9 @@
 package com.sample.controller;
 
 import com.sample.base.BaseResponse;
+import com.sample.base.BaseResult;
+import com.sample.entity.ExampleBean;
+import com.sample.entity.ExampleFileBean;
 import com.sample.util.FileUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,27 +20,27 @@ public class SampleController {
 
     @GetMapping("/get")
     public BaseResponse testGet(String username, String password) {
-        return success(new ExampleBean().setUsername(username).setPassword(password));
+        return BaseResult.success(new ExampleBean().setUsername(username).setPassword(password));
     }
 
     @PostMapping("/post")
     public BaseResponse testPost(String username, String password) {
-        return success(null);
+        return BaseResult.success(null);
     }
 
     @PutMapping("/put")
     public BaseResponse testPut(String username, String password) {
-        return error();
+        return BaseResult.error();
     }
 
     @DeleteMapping("/delete")
     public BaseResponse testDelete(String username, String password) {
-        return success(success(new ExampleBean().setUsername(username).setPassword(password)));
+        return BaseResult.success(new ExampleBean().setUsername(username).setPassword(password));
     }
 
     @PostMapping("/postJson")
     public BaseResponse testPostJson(@RequestBody ExampleBean exampleBean) {
-        return success(exampleBean);
+        return BaseResult.success(exampleBean);
     }
 
     @PostMapping("/uploadFile")
@@ -50,71 +53,9 @@ public class SampleController {
         String filePath = request.getSession().getServletContext().getRealPath("upload/");
         try {
             FileUtil.uploadFile(file.getBytes(), filePath, fileName);
-            return success(new ExampleFileBean().setFileUrl("http://119.45.229.87:1271" + "/upload/" + fileName));
+            return BaseResult.success(new ExampleFileBean().setFileUrl("http://119.45.229.87:1271" + "/upload/" + fileName));
         } catch (Exception e) {
-            return error("上传失败");
+            return BaseResult.error("上传失败");
         }
     }
-
-
-    private BaseResponse success(Object data) {
-        BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setCode(10000);
-        baseResponse.setMsg("请求成功");
-        baseResponse.setData(data);
-        return baseResponse;
-    }
-
-    private BaseResponse error() {
-        BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setCode(10001);
-        baseResponse.setMsg("错误码");
-        baseResponse.setData(null);
-        return baseResponse;
-    }
-
-    private BaseResponse error(String msg) {
-        BaseResponse baseResponse = new BaseResponse();
-        baseResponse.setCode(10001);
-        baseResponse.setMsg(msg);
-        baseResponse.setData(null);
-        return baseResponse;
-    }
-
-    static class ExampleBean {
-        private String username;
-        private String password;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public ExampleBean setUsername(String username) {
-            this.username = username;
-            return this;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public ExampleBean setPassword(String password) {
-            this.password = password;
-            return this;
-        }
-    }
-
-    static class ExampleFileBean {
-        private String fileUrl;
-
-        public String getFileUrl() {
-            return fileUrl;
-        }
-
-        public ExampleFileBean setFileUrl(String fileUrl) {
-            this.fileUrl = fileUrl;
-            return this;
-        }
-    }
-
 }
