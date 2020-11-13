@@ -11,6 +11,12 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * @Author: 张
+ * @Email: 1271396448@qq.com
+ * @Date: 2020/11/13
+ * @DESC: 控制器
+ */
 @RestController
 @RequestMapping("/api")
 public class SampleController {

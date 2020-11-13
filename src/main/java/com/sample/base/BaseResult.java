@@ -1,5 +1,11 @@
 package com.sample.base;
 
+/**
+ * @Author: 张
+ * @Email: 1271396448@qq.com
+ * @Date: 2020/11/13
+ * @DESC: 封装的返回
+ */
 public class BaseResult {
 
     public static BaseResponse success(Object data) {

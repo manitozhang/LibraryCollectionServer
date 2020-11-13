@@ -1,5 +1,11 @@
 package com.sample.base;
 
+/**
+ * @Author: 张
+ * @Email: 1271396448@qq.com
+ * @Date: 2020/11/13
+ * @DESC: 固定的返回参数
+ */
 public class BaseResponse {
 
     private int code;
