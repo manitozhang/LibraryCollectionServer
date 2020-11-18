@@ -4,12 +4,16 @@ import com.sample.base.BaseResponse;
 import com.sample.base.BaseResult;
 import com.sample.entity.ExampleBean;
 import com.sample.entity.ExampleFileBean;
+import com.sample.entity.ExampleListBean;
+import com.sample.util.DateUtil;
 import com.sample.util.FileUtil;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * @Author: 张
@@ -64,4 +68,24 @@ public class SampleController {
             return BaseResult.error("上传失败");
         }
     }
+
+    /**
+     * 获取集合数据
+     * @param page
+     * @param pageNum
+     * @return
+     */
+    @GetMapping("/getList")
+    public BaseResponse getList(Integer page, Integer pageNum) {
+        ArrayList<ExampleListBean> dataList = new ArrayList<>();
+        int startPos = page == 1 ? 0 : (page - 1) * 10;
+        for (int i = startPos; i < pageNum + startPos; i++) {
+            dataList.add(new ExampleListBean(i + 1
+                    , "我是第" + (i + 1) + "标题"
+                    , "我是第" + (i + 1) + "内容"
+                    , DateUtil.getCurrentDateTime()));
+        }
+        return BaseResult.success(dataList);
+    }
+
 }
